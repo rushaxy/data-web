@@ -33,7 +33,7 @@ public class IndexController {
         return new ReturnT<>(jobService.dashboardInfo());
     }
 
-    @PostMapping("/chartInfo")
+    @GetMapping("/chartInfo")
     @ApiOperation("图表信息")
     public ReturnT<Map<String, Object>> chartInfo() {
         return jobService.chartInfo();

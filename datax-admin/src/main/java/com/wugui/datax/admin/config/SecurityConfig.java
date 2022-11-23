@@ -48,11 +48,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.headers().frameOptions().disable();
+                
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+
                 .antMatchers("/static/**","/index.html","/favicon.ico","/avatar.jpg").permitAll()
+
                 .antMatchers("/api/callback","/api/processCallback","/api/registry","/api/registryRemove").permitAll()
+
                 .antMatchers("/doc.html","/swagger-resources/**","/webjars/**","/*/api-docs").anonymous()
+
+                //放开 图表信息 和 监控图
+                .antMatchers("/api/chartInfo","/api/index").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
